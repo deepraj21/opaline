@@ -2,10 +2,20 @@
 
 import * as React from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { ArrowDown01Icon, Cancel01Icon } from "@hugeicons/core-free-icons"
+import { Cancel01Icon } from "@hugeicons/core-free-icons"
 
 import type { Control, Value } from "@/components/customize/types"
+import { ColorPopover } from "@/components/customize/color-picker"
 import { cn } from "@/lib/utils"
+import { GlassSlider } from "@/registry/opaline/ui/glass-slider"
+import { AnimatePresence } from "motion/react"
+import {
+  GlassSelect,
+  GlassSelectContent,
+  GlassSelectItem,
+  GlassSelectTrigger,
+  GlassSelectValue,
+} from "@/registry/opaline/ui/glass-select"
 
 const round = (v: number, step = 1) => {
   const digits = Math.max(0, -Math.floor(Math.log10(step)))
@@ -22,6 +32,9 @@ export function Field({
   onChange: (value: Value) => void
 }) {
   const id = React.useId()
+  if (control.kind === "color") {
+    return <ColorField control={control} value={value} onChange={onChange} />
+  }
   const readout =
     control.kind === "number"
       ? value === null
@@ -45,6 +58,68 @@ export function Field({
         ) : null}
       </div>
       <Input id={id} control={control} value={value} onChange={onChange} />
+    </div>
+  )
+}
+
+function ColorField({
+  control,
+  value,
+  onChange,
+}: {
+  control: Extract<Control, { kind: "color" }>
+  value: Value
+  onChange: (value: Value) => void
+}) {
+  const v = typeof value === "string" ? value : null
+  const [open, setOpen] = React.useState(false)
+  const toggleRef = React.useRef<HTMLButtonElement>(null)
+  const popoverId = React.useId()
+  const close = React.useCallback(() => {
+    setOpen(false)
+    toggleRef.current?.focus({ preventScroll: true })
+  }, [])
+
+  return (
+    <div className="flex min-w-0 flex-col gap-2 rounded-2xl border border-border bg-background/60 px-3.5 py-3">
+      <div className="flex items-center justify-between gap-2 text-[12.5px]">
+        <span className="truncate font-medium text-foreground">{control.label}</span>
+        <span className="flex items-center gap-1 font-mono text-[11.5px] text-muted-foreground tabular-nums">
+          {v ?? control.auto ?? ""}
+          {control.auto && v !== null ? (
+            <ClearButton label={`Reset ${control.label} to ${control.auto}`} onClick={() => onChange(null)} />
+          ) : null}
+        </span>
+      </div>
+      <button
+        ref={toggleRef}
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="dialog"
+        aria-controls={open ? popoverId : undefined}
+        aria-label={`${control.label} color`}
+        onClick={() => setOpen((o) => !o)}
+        className="flex h-8 w-full cursor-pointer items-center justify-between rounded-lg bg-muted/60 px-3 transition-colors outline-none hover:bg-muted/80 focus-visible:ring-2 focus-visible:ring-ring/40"
+      >
+        <span className="font-mono text-[12px] text-muted-foreground tabular-nums">
+          {v ?? control.auto ?? "—"}
+        </span>
+        <span
+          className="size-4.5 shrink-0 rounded-full border border-border/70"
+          style={{ background: v ?? "transparent" }}
+        />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <ColorPopover
+            id={popoverId}
+            anchorRef={toggleRef}
+            value={v ?? "#ffffff"}
+            onValueChange={(hex) => onChange(hex)}
+            onClose={close}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }
@@ -77,44 +152,39 @@ function Input({
   switch (c.kind) {
     case "number": {
       const v = value === null ? (c.default ?? (c.min + c.max) / 2) : Number(value)
-      const pct = ((v - c.min) / (c.max - c.min)) * 100
       return (
-        <input
-          id={id}
-          type="range"
+        <GlassSlider
           min={c.min}
           max={c.max}
           step={c.step ?? 1}
-          value={v}
-          onChange={(e) => onChange(Number(e.target.value))}
-          className={cn("customize-range", value === null && "opacity-50")}
-          style={{ "--fill": `${pct}%` } as React.CSSProperties}
+          value={[v]}
+          onValueChange={([n]) => onChange(n ?? v)}
+          aria-label={c.label}
+          className={cn(value === null && "opacity-50")}
         />
       )
     }
     case "select":
       return (
-        <div className="relative">
-          <select
+        <GlassSelect value={String(value)} onValueChange={(v) => onChange(v)}>
+          <GlassSelectTrigger
             id={id}
-            value={String(value)}
-            onChange={(e) => onChange(e.target.value)}
-            className="h-8 w-full cursor-pointer appearance-none rounded-lg border border-border bg-background pr-8 pl-2.5 text-[13px] outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+            className="h-8 min-w-0 rounded-xl text-[13px]"
+            aria-label={c.label}
           >
+            <GlassSelectValue />
+          </GlassSelectTrigger>
+          <GlassSelectContent>
             {c.options.map((o) => {
               const opt = typeof o === "string" ? { value: o, label: o } : o
               return (
-                <option key={opt.value} value={opt.value}>
+                <GlassSelectItem key={opt.value} value={opt.value}>
                   {opt.label}
-                </option>
+                </GlassSelectItem>
               )
             })}
-          </select>
-          <HugeiconsIcon
-            icon={ArrowDown01Icon}
-            className="pointer-events-none absolute top-1/2 right-2 size-4 -translate-y-1/2 text-muted-foreground"
-          />
-        </div>
+          </GlassSelectContent>
+        </GlassSelect>
       )
     case "boolean":
       return (
@@ -142,8 +212,6 @@ function Input({
           </span>
         </button>
       )
-    case "color":
-      return <ColorInput id={id} control={c} value={value as string | null} onChange={onChange} />
     case "text":
       return (
         <input
@@ -155,58 +223,4 @@ function Input({
         />
       )
   }
-}
-
-function ColorInput({
-  id,
-  control,
-  value,
-  onChange,
-}: {
-  id: string
-  control: Extract<Control, { kind: "color" }>
-  value: string | null
-  onChange: (value: Value) => void
-}) {
-  const [draft, setDraft] = React.useState(value ?? "")
-  React.useEffect(() => setDraft(value ?? ""), [value])
-  const hex = value && /^#[0-9a-f]{6}$/i.test(value) ? value : "#ffffff"
-
-  return (
-    <div className="flex h-8 items-center gap-2 rounded-lg border border-border bg-background pr-1.5 pl-1 focus-within:ring-2 focus-within:ring-ring/40">
-      <label
-        className="relative size-6 shrink-0 cursor-pointer overflow-hidden rounded-md border border-border"
-        style={{
-          background: value ?? "repeating-conic-gradient(var(--muted) 0 25%, transparent 0 50%) 0 0 / 8px 8px",
-        }}
-      >
-        <input
-          type="color"
-          aria-label={`${control.label} picker`}
-          value={hex}
-          onChange={(e) => onChange(e.target.value)}
-          className="absolute inset-0 size-full cursor-pointer opacity-0"
-        />
-      </label>
-      <input
-        id={id}
-        type="text"
-        spellCheck={false}
-        value={draft}
-        placeholder={control.auto ?? ""}
-        onChange={(e) => setDraft(e.target.value)}
-        onBlur={() => {
-          const v = draft.trim()
-          if (!v && control.auto) onChange(null)
-          else if (v && CSS.supports("color", v)) onChange(v)
-          else setDraft(value ?? "")
-        }}
-        onKeyDown={(e) => e.key === "Enter" && (e.target as HTMLInputElement).blur()}
-        className="h-full min-w-0 flex-1 bg-transparent font-mono text-[12px] outline-none placeholder:text-muted-foreground"
-      />
-      {control.auto && value !== null ? (
-        <ClearButton label={`Reset ${control.label} to ${control.auto}`} onClick={() => onChange(null)} />
-      ) : null}
-    </div>
-  )
 }

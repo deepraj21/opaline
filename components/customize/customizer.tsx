@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { ArrowDown01Icon, RefreshIcon } from "@hugeicons/core-free-icons"
+import { RefreshIcon } from "@hugeicons/core-free-icons"
 
 import { attrs, changed, parseUsage, render } from "@/components/customize/code"
 import { customizations, pinned } from "@/components/customize/configs"
@@ -14,6 +14,7 @@ import { Demo } from "@/components/demos"
 import { demoMeta } from "@/components/demos/meta"
 import { CodeFrame } from "@/components/site/code"
 import { Wallpaper } from "@/components/site/wallpaper"
+import { GlassSelect, GlassSelectContent, GlassSelectGroup, GlassSelectItem, GlassSelectLabel, GlassSelectTrigger, GlassSelectValue } from "@/registry/opaline/ui/glass-select"
 import { cn } from "@/lib/utils"
 import { itemsByName } from "@/registry/index"
 import { LiquidGlassProvider } from "@/registry/opaline/ui/liquid-glass"
@@ -133,31 +134,32 @@ export function Customizer({
             <h2 className="text-[15px] font-semibold tracking-[-0.01em]">Customize</h2>
             <div className="flex items-center gap-2">
               {presets.length ? (
-                <label className="relative flex items-center gap-2 text-[12.5px] text-muted-foreground">
-                  Preset
-                  <select
-                    value={preset}
-                    onChange={(e) => apply(e.target.value)}
-                    className="h-8 cursor-pointer appearance-none rounded-lg border border-border bg-background pr-8 pl-2.5 text-[13px] text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
-                  >
-                    <option value={CUSTOM} disabled>
-                      {CUSTOM}
-                    </option>
-                    {presets.map((g) => (
-                      <optgroup key={g.group} label={g.group}>
-                        {g.list.map((p) => (
-                          <option key={p.name} value={p.name}>
-                            {p.name}
-                          </option>
-                        ))}
-                      </optgroup>
-                    ))}
-                  </select>
-                  <HugeiconsIcon
-                    icon={ArrowDown01Icon}
-                    className="pointer-events-none absolute right-2 size-4"
-                  />
-                </label>
+                <div className="flex items-center gap-2 text-[12.5px] text-muted-foreground">
+                  <span id={`${name}-preset-label`}>Preset</span>
+                  <GlassSelect value={preset} onValueChange={(v) => apply(v)}>
+                    <GlassSelectTrigger
+                      className="h-8 w-auto min-w-28 rounded-lg text-[13px]"
+                      aria-labelledby={`${name}-preset-label`}
+                    >
+                      <GlassSelectValue />
+                    </GlassSelectTrigger>
+                    <GlassSelectContent>
+                      <GlassSelectItem value={CUSTOM} disabled>
+                        {CUSTOM}
+                      </GlassSelectItem>
+                      {presets.map((g) => (
+                        <GlassSelectGroup key={g.group}>
+                          <GlassSelectLabel>{g.group}</GlassSelectLabel>
+                          {g.list.map((p) => (
+                            <GlassSelectItem key={p.name} value={p.name}>
+                              {p.name}
+                            </GlassSelectItem>
+                          ))}
+                        </GlassSelectGroup>
+                      ))}
+                    </GlassSelectContent>
+                  </GlassSelect>
+                </div>
               ) : null}
               <button
                 type="button"

@@ -43,9 +43,9 @@ export function Setup() {
       <div className="mb-8 flex flex-col gap-2 px-1">
         <span className="text-[13px] font-medium text-muted-foreground">Three steps</span>
         <h2 className="text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">Setup</h2>
-        <p className="max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-          Requires a shadcn project with Tailwind CSS v4. True refraction renders in Chromium; other
-          browsers get a graceful frosted glass. Building with AI? Point your agent at{" "}
+        <p className="max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
+          Requires a shadcn project with Tailwind CSS v4. True refraction renders in Chromium; <br/>
+          other browsers get a graceful frosted glass. Building with AI? Point your agent at{" "}
           <a href={withBase("/llms.txt")} className="text-foreground underline underline-offset-4">
             /llms.txt
           </a>

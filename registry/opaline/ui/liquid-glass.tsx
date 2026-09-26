@@ -64,13 +64,55 @@ const GlassContext = React.createContext<GlassSettings>({})
  */
 function LiquidGlassProvider({
   children,
-  ...settings
+  ior,
+  surface,
+  thickness,
+  refraction,
+  bezel,
+  blur,
+  saturation,
+  dispersion,
+  specular,
+  lightAngle,
+  tint,
+  variant,
+  shadow,
 }: GlassSettings & { children?: React.ReactNode }) {
   const parent = React.useContext(GlassContext)
   const value = React.useMemo(
-    () => ({ ...parent, ...stripUndefined(settings) }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [parent, ...Object.values(settings)]
+    () =>
+      stripUndefined({
+        ...parent,
+        ior,
+        surface,
+        thickness,
+        refraction,
+        bezel,
+        blur,
+        saturation,
+        dispersion,
+        specular,
+        lightAngle,
+        tint,
+        variant,
+        shadow,
+      }),
+    [
+      parent,
+      ior,
+      surface,
+      thickness,
+      refraction,
+      bezel,
+      blur,
+      saturation,
+      dispersion,
+      specular,
+      lightAngle,
+      tint,
+      variant,
+      shadow,
+    ]
   )
   return <GlassContext.Provider value={value}>{children}</GlassContext.Provider>
 }

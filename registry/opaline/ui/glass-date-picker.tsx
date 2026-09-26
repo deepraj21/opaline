@@ -39,7 +39,7 @@ function GlassCalendar({
   weekStartsOn = 0,
   min,
   max,
-  locale,
+  locale = "en-US",
   className,
   ...props
 }: CalendarProps) {
@@ -188,7 +188,7 @@ function GlassDatePicker({
   defaultValue,
   onValueChange,
   placeholder = "Pick a date",
-  locale,
+  locale = "en-US",
   format = { weekday: "short", month: "short", day: "numeric", year: "numeric" },
   className,
   calendarProps,

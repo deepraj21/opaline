@@ -9,12 +9,13 @@ const DIGITS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 /** Odometer-style number — each digit rolls to its new value. */
 function RollingNumber({
   value,
-  locale,
+  locale = "en-US",
   format,
   className,
   ...props
 }: Omit<React.ComponentProps<"span">, "children"> & {
   value: number
+  /** Defaults to en-US so server and client format identically. */
   locale?: string
   format?: Intl.NumberFormatOptions
 }) {

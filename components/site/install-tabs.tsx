@@ -126,7 +126,7 @@ export function InstallTabs({ data }: { data: InstallData }) {
                 ) or{" "}
                 <button
                   type="button"
-                  onClick={() => setMode("url")}
+                  // onClick={() => setMode("url")}
                   className="cursor-pointer text-foreground underline underline-offset-4"
                 >
                   use the direct URL
@@ -138,7 +138,7 @@ export function InstallTabs({ data }: { data: InstallData }) {
                 Installing by URL needs no configuration.{" "}
                 <button
                   type="button"
-                  onClick={() => setMode("namespace")}
+                  // onClick={() => setMode("namespace")}
                   className="cursor-pointer text-foreground underline underline-offset-4"
                 >
                   Use the @opaline namespace

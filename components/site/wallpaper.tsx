@@ -70,7 +70,7 @@ const styles: Record<WallpaperName, React.CSSProperties> = {
   grid: {
     background: `url("/wallpapers/grid.png") center / cover`,
   },
-  hero: { background: "#0a0a0f" },
+  hero: { background: `url("/wallpapers/hero-fallback.png") center / cover, #0a0a0f` },
 }
 
 export function Wallpaper({
@@ -98,6 +98,7 @@ export function Wallpaper({
           loop
           playsInline
           preload="auto"
+          poster="/wallpapers/hero-fallback.png"
           src="/wallpapers/hero.mp4"
           className="absolute inset-0 h-full w-full object-cover"
         />

@@ -12,7 +12,7 @@ function GlassWidgetCalendar({
   date: dateProp,
   events = [],
   size = "small",
-  locale,
+  locale = "en-US",
   className,
   ...props
 }: Omit<React.ComponentProps<typeof GlassWidget>, "children"> & {
@@ -20,6 +20,7 @@ function GlassWidgetCalendar({
   date?: Date
   events?: CalendarEvent[]
   size?: WidgetSize
+  /** Defaults to en-US so server and client format identically. */
   locale?: string
 }) {
   const [now, setNow] = React.useState<Date | undefined>(dateProp)

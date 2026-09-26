@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { LiquidGlass } from "@/registry/opaline/ui/liquid-glass"
 
 const glassButtonVariants = cva(
-  "group/glass-button relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full font-medium tracking-[-0.01em] whitespace-nowrap text-(--glass-foreground) transition-[transform,filter] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] outline-none select-none hover:scale-[1.035] active:scale-[0.96] focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[1.15em] before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:bg-[radial-gradient(circle_at_var(--x,50%)_var(--y,50%),oklch(1_0_0/0.35),transparent_60%)] before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100",
+  "group/glass-button relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full font-medium tracking-[-0.01em] whitespace-nowrap text-(--glass-foreground) transition-[transform,filter] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] outline-none select-none active:scale-[0.96] focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[1.15em] before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] hover:before:opacity-100",
   {
     variants: {
       variant: {

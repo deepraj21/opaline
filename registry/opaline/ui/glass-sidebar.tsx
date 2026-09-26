@@ -58,7 +58,7 @@ function GlassSidebar({
         )}
       >
         <aside data-slot="glass-sidebar" data-collapsed={collapsed || undefined} {...props}>
-          <div ref={ref} className="relative flex flex-1 flex-col gap-1">
+          <div ref={ref} className="relative flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto">
             {rect ? (
               <LiquidGlass
                 aria-hidden
@@ -78,10 +78,15 @@ function GlassSidebar({
 }
 
 function GlassSidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
+  const { collapsed } = useGlassSidebar()
   return (
     <div
       data-slot="glass-sidebar-header"
-      className={cn("flex h-11 items-center gap-2 px-2", className)}
+      className={cn(
+        "flex h-11 items-center gap-2",
+        collapsed ? "justify-center" : "px-2",
+        className
+      )}
       {...props}
     />
   )
@@ -141,6 +146,7 @@ function GlassSidebarItem({
       className={cn(
         "relative z-10 flex h-10 w-full cursor-pointer items-center gap-3 rounded-[14px] px-[11px] text-left text-[14px] font-medium tracking-[-0.01em] whitespace-nowrap opacity-75 transition-[opacity,background-color] outline-none hover:opacity-100 focus-visible:ring-[3px] focus-visible:ring-ring/40 aria-[current=page]:opacity-100 [&_svg]:size-[18px] [&_svg]:shrink-0",
         !active && "hover:bg-(--glass-highlight)/50",
+        collapsed && "justify-center px-0",
         className
       )}
       {...props}
@@ -149,7 +155,9 @@ function GlassSidebarItem({
       {asChild ? (
         <Slot.Slottable>{children}</Slot.Slottable>
       ) : (
-        <span className={cn("flex-1 truncate transition-opacity", collapsed && "opacity-0")}>
+        <span
+          className={cn("flex-1 truncate transition-opacity", collapsed && "hidden")}
+        >
           {children}
         </span>
       )}
@@ -181,7 +189,12 @@ function GlassSidebarToggle({ className, ...props }: React.ComponentProps<"butto
       aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
       onClick={() => setCollapsed(!collapsed)}
       className={cn(
-        "relative z-10 grid size-10 shrink-0 cursor-pointer place-items-center rounded-[14px] opacity-70 transition-[opacity,background-color] outline-none hover:bg-(--glass-highlight)/50 hover:opacity-100 focus-visible:ring-[3px] focus-visible:ring-ring/40 [&_svg]:size-[18px]",
+        "relative z-10 grid size-11 shrink-0 cursor-pointer place-items-center rounded-[14px] opacity-70 transition-[opacity,background-color] outline-none hover:bg-(--glass-highlight)/50 hover:opacity-100 focus-visible:ring-[3px] focus-visible:ring-ring/40 [&_svg]:size-[18px]",
+        // The 18px icon sits 13px inside the 44px box. Expanded headers add
+        // px-2, so pull the toggle to the content edge to line its icon up
+        // with item icons (px-[11px]); collapsed headers are already
+        // edge-to-edge and centered.
+        !collapsed && "-ml-2.5",
         className
       )}
       {...props}

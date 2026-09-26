@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { BookOpen01Icon, FileTextIcon, MoonIcon, Search01Icon, SparklesIcon } from "@hugeicons/core-free-icons"
+import { BookOpen01Icon, FileTextIcon, MoonIcon, Search01Icon } from "@hugeicons/core-free-icons"
 
 import { siteConfig, withBase } from "@/lib/site"
 import { toggleTheme } from "@/lib/theme"
@@ -83,7 +83,6 @@ export function SearchCommand() {
                     value={`${i.title} ${i.name} ${i.description}`}
                     onSelect={() => go(`/components/${i.name}`)}
                   >
-                    {cat === "glass" ? <HugeiconsIcon icon={SparklesIcon} /> : <HugeiconsIcon icon={FileTextIcon} />}
                     <span className="shrink-0">{i.title}</span>
                     <span className="ml-auto hidden min-w-0 truncate pl-4 text-xs opacity-45 sm:block">
                       {i.description}

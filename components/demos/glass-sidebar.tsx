@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Clock01Icon, CloudIcon, Folder01Icon, Home01Icon, InboxIcon, Settings01Icon, StarIcon } from "@hugeicons/core-free-icons"
+import { Clock01Icon, CloudIcon, Download01Icon, FileTextIcon, Folder01Icon, Home01Icon, Image01Icon, InboxIcon, MusicIcon, Settings01Icon, StarIcon } from "@hugeicons/core-free-icons"
 
 import {
   GlassSidebar,
@@ -20,6 +20,8 @@ const groups = [
       { id: "home", label: "Home", icon: <HugeiconsIcon icon={Home01Icon} /> },
       { id: "inbox", label: "Inbox", icon: <HugeiconsIcon icon={InboxIcon} />, badge: 4 },
       { id: "recents", label: "Recents", icon: <HugeiconsIcon icon={Clock01Icon} /> },
+      { id: "music", label: "Music", icon: <HugeiconsIcon icon={MusicIcon} /> },
+      { id: "photos", label: "Photos", icon: <HugeiconsIcon icon={Image01Icon} /> },
     ],
   },
   {
@@ -27,6 +29,8 @@ const groups = [
     items: [
       { id: "cloud", label: "iCloud Drive", icon: <HugeiconsIcon icon={CloudIcon} /> },
       { id: "projects", label: "Projects", icon: <HugeiconsIcon icon={Folder01Icon} /> },
+      { id: "documents", label: "Documents", icon: <HugeiconsIcon icon={FileTextIcon} /> },
+      { id: "downloads", label: "Downloads", icon: <HugeiconsIcon icon={Download01Icon} />, badge: 2 },
       { id: "starred", label: "Starred", icon: <HugeiconsIcon icon={StarIcon} /> },
     ],
   },
@@ -35,10 +39,10 @@ const groups = [
 export default function GlassSidebarDemo() {
   const [active, setActive] = React.useState("home")
   return (
-    <div className="h-[380px]">
+    <div className="h-[600px]">
       <GlassSidebar>
         <GlassSidebarHeader>
-          <GlassSidebarToggle className="-ml-2" />
+          <GlassSidebarToggle />
         </GlassSidebarHeader>
         {groups.map((group) => (
           <GlassSidebarGroup key={group.label} label={group.label}>

@@ -13,6 +13,7 @@ export type WallpaperName =
   | "grid"
   | "dusk"
   | "hero"
+  | "ice"
 
 const svg = (markup: string) =>
   `url("data:image/svg+xml,${encodeURIComponent(markup)}")`
@@ -39,9 +40,10 @@ const styles: Record<WallpaperName, React.CSSProperties> = {
     background: `url("/wallpapers/stripes.jpg") center / cover`,
   },
   dots: {
-    background: `
-      radial-gradient(circle, rgba(20,20,30,0.85) 2.2px, transparent 2.8px) 0 0 / 18px 18px,
-      linear-gradient(135deg, #fef6e4, #f3d2ff 50%, #c7e7ff)`,
+    background: `url("/wallpapers/dots.jpg") center / cover`,
+  },
+  ice: {
+    background: `url("/wallpapers/ice.jpg") center / cover`,
   },
   type: {
     background: "linear-gradient(135deg, #111114, #232329)",

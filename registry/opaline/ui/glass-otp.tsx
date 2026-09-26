@@ -123,7 +123,7 @@ function GlassOTP({
                 bezel={12}
                 tint={tint}
                 className={cn(
-                  "grid h-12 w-10 place-items-center rounded-[16px] text-[20px] font-semibold sm:h-14 sm:w-12 sm:rounded-[18px] sm:text-[24px] tracking-[-0.02em] text-(--glass-foreground) tabular-nums transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+                  "grid h-12 w-10 place-items-center rounded-[16px] text-[20px] font-semibold tracking-[-0.02em] text-(--glass-foreground) tabular-nums transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] @sm:h-14 @sm:w-12 @sm:rounded-[18px] @sm:text-[24px]",
                   status === "success" && "scale-[1.04]",
                   className
                 )}
@@ -137,7 +137,7 @@ function GlassOTP({
                     {mask ? "•" : char}
                   </span>
                 ) : isActive ? (
-                  <span className="h-6 w-0.5 rounded-full sm:h-7 bg-current motion-safe:animate-[opaline-caret_1s_steps(1)_infinite]" />
+                  <span className="h-6 w-0.5 rounded-full bg-current motion-safe:animate-[opaline-caret_1s_steps(1)_infinite] @sm:h-7" />
                 ) : null}
               </LiquidGlass>
             </React.Fragment>

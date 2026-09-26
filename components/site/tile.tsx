@@ -50,7 +50,7 @@ export function Stage({
   return (
     <div
       className={cn(
-        "relative isolate flex items-center justify-center overflow-hidden p-8",
+        "relative isolate flex items-center justify-center overflow-hidden p-8 @container",
         !meta.wallpaper &&
           "bg-[radial-gradient(circle,var(--border)_1px,transparent_1px)] [background-size:16px_16px]",
         meta.stage,
@@ -63,7 +63,12 @@ export function Stage({
           className="-z-10 dark:brightness-[0.8]"
         />
       ) : null}
-      <Demo name={name} />
+      {/* Full width so w-full demos lay out normally; m-auto centers the
+          wrapper when content fits but pins it top-left on overflow, so
+          plain centering can never eat the top or left edge. */}
+      <div className="m-auto flex w-full flex-col items-center">
+        <Demo name={name} />
+      </div>
     </div>
   );
 }

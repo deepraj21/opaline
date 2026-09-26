@@ -110,7 +110,7 @@ export default async function ComponentPage({
 
   return (
     <div className="mx-auto flex max-w-6xl gap-10 px-4 pt-28 pb-24 sm:px-6">
-      <aside className="sticky top-24 hidden h-[calc(100vh-7rem)] w-52 shrink-0 overflow-y-auto lg:block">
+      <aside className="sticky top-24 hidden h-[calc(100vh-7rem)] w-52 shrink-0 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:block">
         <DocsNav current={name} />
       </aside>
 

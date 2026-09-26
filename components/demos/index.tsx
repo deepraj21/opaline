@@ -2,7 +2,6 @@
 
 // List of demo components, keyed by registry item name.
 
-import ActivityRingsDemo from "./activity-rings"
 import GlassBadgeDemo from "./glass-badge"
 import GlassButtonDemo from "./glass-button"
 import GlassCardDemo from "./glass-card"
@@ -40,13 +39,8 @@ import GlassWidgetBatteryDemo from "./glass-widget-battery"
 import GlassWidgetCalendarDemo from "./glass-widget-calendar"
 import GlassWidgetWeatherDemo from "./glass-widget-weather"
 import LiquidGlassDemo from "./liquid-glass"
-import MeshGradientDemo from "./mesh-gradient"
-import RollingNumberDemo from "./rolling-number"
-import ShimmerTextDemo from "./shimmer-text"
-import SpinnerDemo from "./spinner"
 
 const demos: Record<string, React.ComponentType> = {
-  "activity-rings": ActivityRingsDemo,
   "glass-badge": GlassBadgeDemo,
   "glass-button": GlassButtonDemo,
   "glass-card": GlassCardDemo,
@@ -84,10 +78,6 @@ const demos: Record<string, React.ComponentType> = {
   "glass-widget-calendar": GlassWidgetCalendarDemo,
   "glass-widget-weather": GlassWidgetWeatherDemo,
   "liquid-glass": LiquidGlassDemo,
-  "mesh-gradient": MeshGradientDemo,
-  "rolling-number": RollingNumberDemo,
-  "shimmer-text": ShimmerTextDemo,
-  "spinner": SpinnerDemo,
 }
 
 export function Demo({ name }: { name: string }) {

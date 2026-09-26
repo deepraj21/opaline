@@ -1,7 +1,7 @@
 # Opaline — TODO
 
 ## Done
-- [x] 42 components: 32 liquid glass + 4 widgets + 5 accents + the `LiquidGlass` primitive
+- [x] 37 components: 32 liquid glass + 4 widgets + the `LiquidGlass` primitive
 - [x] Physically based refraction (Snell's law, surface profiles, IOR, thickness, specular) + `LiquidGlassProvider`
 - [x] Customize panel with presets, generated code and props table on every component page
 - [x] Interactive "How the glass bends light" article on the Liquid Glass page

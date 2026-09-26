@@ -1,17 +1,21 @@
 import type { Metadata } from "next"
 
+import { HugeiconsIcon } from "@hugeicons/react"
+import { ArrowRight01Icon } from "@hugeicons/core-free-icons"
+
 import { ComponentGrid } from "@/components/site/grid"
+import { Tile } from "@/components/site/tile"
+import { GlassButton } from "@/registry/opaline/ui/glass-button"
 import { categoryLabels, docItems, type Category } from "@/registry/index"
 
 export const metadata: Metadata = {
   title: "Components",
-  description: "Every Opaline component — liquid glass surfaces, controls and accents.",
+  description: "Every Opaline component — liquid glass surfaces and controls.",
 }
 
 const blurbs: Record<Category, string> = {
   foundation: "The primitive every glass component is built on.",
   glass: "Surfaces and controls that refract whatever sits behind them.",
-  accent: "Small, considered details that pair beautifully with glass.",
 }
 
 export default function ComponentsPage() {
@@ -33,7 +37,33 @@ export default function ComponentsPage() {
               <h2 className="text-2xl font-semibold tracking-[-0.03em]">{categoryLabels[cat]}</h2>
               <p className="text-[15px] text-muted-foreground">{blurbs[cat]}</p>
             </div>
-            <ComponentGrid items={list} />
+            {cat === "foundation" ? (
+              <div className="grid items-center gap-8 lg:grid-cols-2">
+                {list.map((i) => (
+                  <Tile key={i.name} name={i.name} />
+                ))}
+                <div className="flex flex-col items-start gap-4 px-1">
+                  <h3 className="text-xl font-semibold tracking-[-0.02em]">
+                    How the glass bends light
+                  </h3>
+                  <p className="max-w-lg text-[15px] leading-relaxed text-muted-foreground">
+                    Most “glass” on the web is a blur. Real glass doesn&apos;t blur what&apos;s
+                    behind it: it bends it. Near a curved edge, light changes direction and the
+                    background appears to slide, stretch and fringe with colour. Opaline models
+                    that with a little optics: a surface shape, an index of refraction and
+                    Snell&apos;s law. The result is baked into an image the browser can apply to
+                    the backdrop.
+                  </p>
+                  <GlassButton variant="prominent" asChild>
+                    <a href="/components/liquid-glass#how-it-works">
+                      Read <HugeiconsIcon icon={ArrowRight01Icon} />
+                    </a>
+                  </GlassButton>
+                </div>
+              </div>
+            ) : (
+              <ComponentGrid items={list} />
+            )}
           </section>
         )
       })}

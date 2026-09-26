@@ -92,8 +92,13 @@ function GlassControlToggle({
       {...props}
     >
       <span
-        className="grid size-9 shrink-0 place-items-center rounded-full bg-current/12 transition-[background-color,color,transform] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-active/toggle:scale-90 [&_svg]:size-[18px]"
-        style={pressed ? { background: color, color: "white" } : undefined}
+        className={cn(
+          "grid size-9 shrink-0 place-items-center rounded-full bg-current/12 transition-[background-color,color,transform] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-active/toggle:scale-90 [&_svg]:size-[18px]",
+          // Active state follows macOS: colour fill with a white glyph in
+          // light mode, inverted to a white fill with a colour glyph in dark.
+          pressed && "bg-(--tgl) text-white dark:bg-white dark:text-(--tgl)"
+        )}
+        style={pressed ? ({ "--tgl": color } as React.CSSProperties) : undefined}
       >
         {icon}
       </span>

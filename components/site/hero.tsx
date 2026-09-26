@@ -10,7 +10,6 @@ import { GlassBadge } from "@/registry/opaline/ui/glass-badge"
 import { GlassButton } from "@/registry/opaline/ui/glass-button"
 import { GlassInput } from "@/registry/opaline/ui/glass-input"
 import { GlassLens } from "@/registry/opaline/ui/glass-lens"
-import { ShimmerText } from "@/registry/opaline/ui/shimmer-text"
 
 export function Hero() {
   const videoRef = React.useRef<HTMLVideoElement>(null)
@@ -34,7 +33,7 @@ export function Hero() {
         className="mb-7 text-foreground"
         tint="color-mix(in oklch, var(--foreground) 4%, transparent)"
       >
-        <ShimmerText>Now with Liquid Glass</ShimmerText>
+        Now with Liquid Glass
       </GlassBadge>
       <h1 className="max-w-3xl text-[44px] leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-7xl">
         Interfaces that

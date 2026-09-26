@@ -5,7 +5,6 @@ import { ArrowRight01Icon, Mic01Icon, Search01Icon } from "@hugeicons/core-free-
 
 import { element, openTag } from "@/components/customize/code"
 import type { Control, Customization, Values } from "@/components/customize/types"
-import { ActivityRings } from "@/registry/opaline/ui/activity-rings"
 import { GlassBadge } from "@/registry/opaline/ui/glass-badge"
 import { GlassButton } from "@/registry/opaline/ui/glass-button"
 import {
@@ -26,10 +25,6 @@ import { GlassSwitch } from "@/registry/opaline/ui/glass-switch"
 import { GlassText } from "@/registry/opaline/ui/glass-text"
 import { GlassWidget, type WidgetSize } from "@/registry/opaline/ui/glass-widget"
 import { LiquidGlass } from "@/registry/opaline/ui/liquid-glass"
-import { MeshGradient } from "@/registry/opaline/ui/mesh-gradient"
-import { RollingNumber } from "@/registry/opaline/ui/rolling-number"
-import { ShimmerText } from "@/registry/opaline/ui/shimmer-text"
-import { Spinner } from "@/registry/opaline/ui/spinner"
 
 const ui = (name: string, ...names: string[]) =>
   `import { ${names.join(", ")} } from "@/components/ui/${name}"`
@@ -553,146 +548,4 @@ export const customizations: Record<string, Customization> = {
     }),
   },
 
-  spinner: {
-    glass: false,
-    controls: [
-      num("size", "Size", 20, 12, 64, { unit: "px", description: "Preview only — use a `size-*` class." }),
-      { kind: "color", key: "color", label: "Colour", default: null, auto: "Current", type: "string", description: "Inherits `currentColor`." },
-    ],
-    render: (v) => <Spinner style={{ width: n(v, "size"), height: n(v, "size"), color: v.color ? s(v, "color") : undefined }} />,
-    code: (v) => ({
-      imports: [ui("spinner", "Spinner")],
-      jsx: openTag(
-        "Spinner",
-        [`className="size-[${n(v, "size")}px]${v.color ? ` text-[${s(v, "color").replace(/ /g, "_")}]` : ""}"`],
-        true
-      ),
-    }),
-  },
-
-  "shimmer-text": {
-    glass: false,
-    controls: [
-      text("children", "Text", "Thinking…"),
-      num("duration", "Duration", 2.4, 0.6, 6, { step: 0.1, unit: "s", description: "Seconds per sweep." }),
-    ],
-    render: (v) => (
-      <ShimmerText duration={n(v, "duration")} className="text-3xl font-semibold tracking-[-0.03em]">
-        {s(v, "children")}
-      </ShimmerText>
-    ),
-    code: (v, attrs) => ({
-      imports: [ui("shimmer-text", "ShimmerText")],
-      jsx: element("ShimmerText", attrs(["duration"]), s(v, "children")),
-    }),
-  },
-
-  "rolling-number": {
-    glass: false,
-    controls: [
-      num("value", "Value", 1284.5, 0, 10000, { step: 0.5, type: "number" }),
-      {
-        kind: "select",
-        key: "style",
-        label: "Format",
-        default: "currency",
-        options: ["decimal", "currency", "percent"],
-        type: "Intl.NumberFormatOptions",
-        description: "Passed as `format`.",
-      },
-    ],
-    render: (v) => (
-      <RollingNumber
-        value={s(v, "style") === "percent" ? n(v, "value") / 10000 : n(v, "value")}
-        format={s(v, "style") === "currency" ? { style: "currency", currency: "USD" } : { style: s(v, "style") as "decimal" }}
-        className="text-5xl font-semibold tracking-[-0.04em]"
-      />
-    ),
-    code: (v) => ({
-      imports: [ui("rolling-number", "RollingNumber")],
-      jsx: openTag(
-        "RollingNumber",
-        [
-          `value={${s(v, "style") === "percent" ? n(v, "value") / 10000 : n(v, "value")}}`,
-          s(v, "style") === "currency"
-            ? 'format={{ style: "currency", currency: "USD" }}'
-            : `format={{ style: "${s(v, "style")}" }}`,
-        ],
-        true
-      ),
-    }),
-  },
-
-  "activity-rings": {
-    glass: false,
-    controls: [
-      num("move", "Move", 0.82, 0, 1.5, { step: 0.01, type: "Ring[]", description: "Each ring is `{ value, color, label }`." }),
-      num("exercise", "Exercise", 0.64, 0, 1.5, { step: 0.01, type: "Ring[]" }),
-      num("stand", "Stand", 0.9, 0, 1.5, { step: 0.01, type: "Ring[]" }),
-      num("size", "Size", 160, 80, 240, { unit: "px" }),
-      num("stroke", "Stroke", 16, 4, 28, { unit: "px" }),
-      num("gap", "Gap", 3, 0, 10, { unit: "px" }),
-    ],
-    render: (v) => (
-      <ActivityRings
-        size={n(v, "size")}
-        stroke={n(v, "stroke")}
-        gap={n(v, "gap")}
-        rings={[
-          { value: n(v, "move"), color: "#fa114f", label: "Move" },
-          { value: n(v, "exercise"), color: "#a6ff00", label: "Exercise" },
-          { value: n(v, "stand"), color: "#00e0ff", label: "Stand" },
-        ]}
-      />
-    ),
-    code: (v, attrs) => ({
-      imports: [ui("activity-rings", "ActivityRings")],
-      jsx: openTag(
-        "ActivityRings",
-        [
-          ...attrs(["size", "stroke", "gap"]),
-          `rings={[\n  { value: ${n(v, "move")}, color: "#fa114f", label: "Move" },\n  { value: ${n(v, "exercise")}, color: "#a6ff00", label: "Exercise" },\n  { value: ${n(v, "stand")}, color: "#00e0ff", label: "Stand" },\n]}`,
-        ],
-        true
-      ),
-    }),
-  },
-
-  "mesh-gradient": {
-    glass: false,
-    controls: [
-      num("speed", "Speed", 1, 0, 4, { step: 0.1, description: "Animation speed multiplier. 0 pauses it." }),
-      { kind: "boolean", key: "grain", label: "Grain", default: true },
-      { kind: "color", key: "c1", label: "Colour 1", default: "#ff7ab6", type: "string[]", description: "Passed as `colors`." },
-      { kind: "color", key: "c2", label: "Colour 2", default: "#ffb86b", type: "string[]" },
-      { kind: "color", key: "c3", label: "Colour 3", default: "#6bd2ff", type: "string[]" },
-      { kind: "color", key: "c4", label: "Colour 4", default: "#8f7bff", type: "string[]" },
-    ],
-    presets: [
-      { name: "Ocean", values: { c1: "#38bdf8", c2: "#2563eb", c3: "#22d3ee", c4: "#1e1b4b" } },
-      { name: "Sunset", values: { c1: "#fb7185", c2: "#f97316", c3: "#facc15", c4: "#a855f7" } },
-    ],
-    render: (v) => (
-      <MeshGradient
-        colors={["c1", "c2", "c3", "c4"].map((k) => s(v, k))}
-        speed={n(v, "speed")}
-        grain={b(v, "grain")}
-        className="grid h-64 w-full max-w-md place-items-center rounded-[28px]"
-      >
-        <GlassButton size="lg">Glass on a mesh</GlassButton>
-      </MeshGradient>
-    ),
-    code: (v, attrs) => ({
-      imports: [ui("mesh-gradient", "MeshGradient")],
-      jsx: openTag(
-        "MeshGradient",
-        [
-          `colors={[${["c1", "c2", "c3", "c4"].map((k) => JSON.stringify(s(v, k))).join(", ")}]}`,
-          ...attrs(["speed", "grain"]),
-          'className="h-64 rounded-[28px]"',
-        ],
-        true
-      ),
-    }),
-  },
 }

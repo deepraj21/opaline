@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { CheckIcon, CopyIcon } from "@hugeicons/core-free-icons"
 
 import { installCommand, type InstallMode } from "@/lib/site"
+import { GlassButton } from "@/registry/opaline/ui/glass-button"
 import { LiquidGlass } from "@/registry/opaline/ui/liquid-glass"
 import { cn } from "@/lib/utils"
 
@@ -127,9 +128,11 @@ export function InstallBar({ name = "all" }: { name?: string }) {
         <button type="button" onClick={() => copy(command)}>
           <span className="text-muted-foreground select-none">$</span>
           <span className="min-w-0 flex-1 truncate text-left">{command}</span>
-          <span className="grid size-9 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground transition-transform group-active/bar:scale-90">
-            <CopyIconSwap copied={copied} />
-          </span>
+          <GlassButton size="icon-sm" variant="prominent" asChild>
+            <span>
+              <CopyIconSwap copied={copied} />
+            </span>
+          </GlassButton>
         </button>
       </LiquidGlass>
     </div>

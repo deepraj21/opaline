@@ -339,8 +339,7 @@
         "@hugeicons/core-free-icons"
       ],
       "registryDependencies": [
-        "https://opaline.buildlab.in/r/liquid-glass.json",
-        "https://opaline.buildlab.in/r/rolling-number.json"
+        "https://opaline.buildlab.in/r/liquid-glass.json"
       ],
       "files": [
         {
@@ -1505,99 +1504,6 @@
       }
     },
     {
-      "name": "mesh-gradient",
-      "type": "registry:ui",
-      "title": "Mesh Gradient",
-      "description": "Slowly drifting, grain-textured colour field — the perfect backdrop for glass.",
-      "files": [
-        {
-          "path": "registry/opaline/ui/mesh-gradient.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "css": {
-        "@keyframes opaline-drift": {
-          "0%": {
-            "transform": "translate(0, 0) scale(1)"
-          },
-          "50%": {
-            "transform": "translate(var(--dx1), var(--dy1)) scale(1.18)"
-          },
-          "100%": {
-            "transform": "translate(var(--dx2), var(--dy2)) scale(0.92)"
-          }
-        }
-      }
-    },
-    {
-      "name": "rolling-number",
-      "type": "registry:ui",
-      "title": "Rolling Number",
-      "description": "Odometer-style number where every digit rolls to its new value.",
-      "files": [
-        {
-          "path": "registry/opaline/ui/rolling-number.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "activity-rings",
-      "type": "registry:ui",
-      "title": "Activity Rings",
-      "description": "Concentric progress rings in the spirit of Apple Watch.",
-      "files": [
-        {
-          "path": "registry/opaline/ui/activity-rings.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "shimmer-text",
-      "type": "registry:ui",
-      "title": "Shimmer Text",
-      "description": "Text with a slow specular sweep, like light catching glass.",
-      "files": [
-        {
-          "path": "registry/opaline/ui/shimmer-text.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "css": {
-        "@keyframes opaline-sheen": {
-          "from": {
-            "background-position": "100% 0"
-          },
-          "to": {
-            "background-position": "-150% 0"
-          }
-        }
-      }
-    },
-    {
-      "name": "spinner",
-      "type": "registry:ui",
-      "title": "Spinner",
-      "description": "Apple-style eight-spoke activity indicator.",
-      "files": [
-        {
-          "path": "registry/opaline/ui/spinner.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "css": {
-        "@keyframes opaline-spoke": {
-          "from": {
-            "opacity": "1"
-          },
-          "to": {
-            "opacity": "0.15"
-          }
-        }
-      }
-    },
-    {
       "name": "all",
       "type": "registry:item",
       "title": "Everything",
@@ -1639,12 +1545,7 @@
         "https://opaline.buildlab.in/r/glass-toolbar.json",
         "https://opaline.buildlab.in/r/glass-tooltip.json",
         "https://opaline.buildlab.in/r/glass-badge.json",
-        "https://opaline.buildlab.in/r/glass-otp.json",
-        "https://opaline.buildlab.in/r/mesh-gradient.json",
-        "https://opaline.buildlab.in/r/rolling-number.json",
-        "https://opaline.buildlab.in/r/activity-rings.json",
-        "https://opaline.buildlab.in/r/shimmer-text.json",
-        "https://opaline.buildlab.in/r/spinner.json"
+        "https://opaline.buildlab.in/r/glass-otp.json"
       ]
     }
   ]

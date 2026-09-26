@@ -83,8 +83,6 @@ Every component page has a **Customize** panel to try these live and copy the co
 
 **Widgets**: Weather · Calendar · Battery, in iOS small, medium and large sizes
 
-**Accents**: Activity Rings · Mesh Gradient · Rolling Number · Shimmer Text · Spinner
-
 Every component has a live preview with a Customize panel, a props table, source code and install commands on the [website](https://opaline.buildlab.in/components).
 
 ## Browser support

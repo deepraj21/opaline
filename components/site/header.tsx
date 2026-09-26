@@ -79,7 +79,7 @@ export function Header() {
       >
         <Link href="/" className="mr-auto flex items-center gap-2">
           <Logo className="size-6" />
-          <span className="text-[15px] font-semibold tracking-[-0.02em]">
+          <span className="text-[20px] font-semibold tracking-[-0.02em]">
             Opaline
           </span>
         </Link>

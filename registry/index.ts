@@ -2,7 +2,7 @@
 // `scripts/generate-registry.mts` turns it into registry.json, llms.txt and
 // per-component markdown; the site reads it for pages, search and commands.
 
-export type Category = "foundation" | "glass" | "accent"
+export type Category = "foundation" | "glass"
 
 export type Item = {
   name: string
@@ -25,7 +25,6 @@ export type Item = {
 export const categoryLabels: Record<Category, string> = {
   foundation: "Foundations",
   glass: "Liquid Glass",
-  accent: "Accents",
 }
 
 export const keyframes: Record<string, Record<string, Record<string, string>>> = {
@@ -96,23 +95,6 @@ const glass = (
   files: [ui(name)],
   internal: ["liquid-glass"],
   glass: true,
-  usage,
-  ...extra,
-})
-
-const accent = (
-  name: string,
-  title: string,
-  description: string,
-  usage: string,
-  extra: Partial<Item> = {}
-): Item => ({
-  name,
-  title,
-  description,
-  category: "accent",
-  type: "registry:ui",
-  files: [ui(name)],
   usage,
   ...extra,
 })
@@ -263,7 +245,7 @@ import { GlassSegmented, GlassSegmentedItem } from "@/components/ui/glass-segmen
 />`,
     {
       dependencies: ["@hugeicons/react", "@hugeicons/core-free-icons"],
-      internal: ["liquid-glass", "rolling-number"],
+      internal: ["liquid-glass"],
       keyframes: ["opaline-shake"],
     }
   ),
@@ -768,59 +750,6 @@ import {
       internal: ["liquid-glass", "use-active-indicator"],
       keyframes: ["opaline-glass-in", "opaline-caret", "opaline-shake"],
     }
-  ),
-
-  accent(
-    "mesh-gradient",
-    "Mesh Gradient",
-    "Slowly drifting, grain-textured colour field — the perfect backdrop for glass.",
-    `import { MeshGradient } from "@/components/ui/mesh-gradient"
-
-<MeshGradient className="h-96 rounded-3xl" colors={["#ff7ab6", "#6bd2ff", "#8f7bff"]}>
-  {/* put glass components here */}
-</MeshGradient>`,
-    { keyframes: ["opaline-drift"] }
-  ),
-  accent(
-    "rolling-number",
-    "Rolling Number",
-    "Odometer-style number where every digit rolls to its new value.",
-    `import { RollingNumber } from "@/components/ui/rolling-number"
-
-<RollingNumber value={1284.5} format={{ style: "currency", currency: "USD" }} />`
-  ),
-  accent(
-    "activity-rings",
-    "Activity Rings",
-    "Concentric progress rings in the spirit of Apple Watch.",
-    `import { ActivityRings } from "@/components/ui/activity-rings"
-
-<ActivityRings
-  rings={[
-    { value: 0.82, color: "#fa114f", label: "Move" },
-    { value: 0.64, color: "#a6ff00", label: "Exercise" },
-    { value: 0.9, color: "#00e0ff", label: "Stand" },
-  ]}
-/>`
-  ),
-  accent(
-    "shimmer-text",
-    "Shimmer Text",
-    "Text with a slow specular sweep, like light catching glass.",
-    `import { ShimmerText } from "@/components/ui/shimmer-text"
-
-<ShimmerText className="text-2xl font-semibold">Thinking…</ShimmerText>`,
-    { keyframes: ["opaline-sheen"] }
-  ),
-  accent(
-    "spinner",
-    "Spinner",
-    "Apple-style eight-spoke activity indicator.",
-    `import { Spinner } from "@/components/ui/spinner"
-
-<Spinner />
-<Spinner className="size-8 text-muted-foreground" />`,
-    { keyframes: ["opaline-spoke"] }
   ),
 ]
 

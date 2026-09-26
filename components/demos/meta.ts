@@ -37,7 +37,6 @@ export const demoMeta: Record<string, DemoMeta> = {
   "glass-toolbar": { wallpaper: "dots" },
   "glass-tooltip": { wallpaper: "ocean" },
   "glass-badge": { wallpaper: "sunset" },
-  "mesh-gradient": { stage: "p-6" },
   "glass-segmented": { wallpaper: "sunset" },
   "glass-date-picker": { wallpaper: "aurora", tile: "tall" },
   "glass-stepper": { wallpaper: "bloom" },

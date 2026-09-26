@@ -24,7 +24,7 @@ export default function GlassDockDemo() {
     <div className="flex h-44 items-center justify-center max-md:scale-[0.62] md:max-lg:scale-90">
       <GlassDock>
         {apps.map((app, i) => (
-          <GlassDockItem key={app.label} label={app.label} active={i < 3}>
+          <GlassDockItem key={app.label} label={app.label}>
             <Image
               src={app.src}
               alt={app.label}

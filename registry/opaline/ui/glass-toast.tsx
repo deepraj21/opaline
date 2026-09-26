@@ -60,7 +60,15 @@ const icons: Record<ToastVariant, React.ReactNode> = {
   info: <HugeiconsIcon icon={InfoIcon} className="text-[#0a84ff]" />,
 }
 
-function ToastItem({ data, index }: { data: ToastData; index: number }) {
+function ToastItem({
+  data,
+  index,
+  ref,
+}: {
+  data: ToastData
+  index: number
+  ref?: React.Ref<HTMLLIElement>
+}) {
   const { id, title, description, variant = "default", icon, action, leaving } = data
   const duration = data.duration ?? 4000
   const [paused, setPaused] = React.useState(false)
@@ -75,6 +83,7 @@ function ToastItem({ data, index }: { data: ToastData; index: number }) {
 
   return (
     <li
+      ref={ref}
       className={cn(
         "pointer-events-auto w-full transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.34,1.3,0.64,1)]",
         "[--glass-enter-scale:0.75] [--glass-enter-y:-140%] [--glass-exit-scale:0.75] [--glass-exit-y:-140%]",
@@ -132,6 +141,37 @@ function GlassToaster({
     () => toasts
   )
 
+  // FLIP the stack: when toasts are added or removed the survivors reflow
+  // instantly, so glide each one from its previous top to its new one.
+  const itemEls = React.useRef(new Map<number, HTMLLIElement>())
+  const prevTops = React.useRef(new Map<number, number>())
+  React.useLayoutEffect(() => {
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    const seen = new Set<number>()
+    for (const t of list) {
+      const el = itemEls.current.get(t.id)
+      if (!el) continue
+      seen.add(t.id)
+      const top = el.getBoundingClientRect().top
+      const prev = prevTops.current.get(t.id)
+      if (prev !== undefined && !reduce && Math.abs(top - prev) > 1) {
+        el.animate(
+          [{ transform: `translateY(${prev - top}px)` }, { transform: "translateY(0)" }],
+          { duration: 450, easing: "cubic-bezier(0.34,1.25,0.64,1)" }
+        )
+      }
+      prevTops.current.set(t.id, top)
+    }
+    for (const id of [...itemEls.current.keys()]) {
+      if (!seen.has(id)) {
+        itemEls.current.delete(id)
+        prevTops.current.delete(id)
+      }
+    }
+  })
+
   return (
     <ol
       data-slot="glass-toaster"
@@ -143,7 +183,14 @@ function GlassToaster({
       )}
     >
       {list.map((t, i) => (
-        <ToastItem key={t.id} data={t} index={i} />
+        <ToastItem
+          key={t.id}
+          data={t}
+          index={i}
+          ref={(el) => {
+            if (el) itemEls.current.set(t.id, el)
+          }}
+        />
       ))}
     </ol>
   )
